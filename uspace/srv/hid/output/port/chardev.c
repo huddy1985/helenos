@@ -50,7 +50,7 @@ enum {
 	chardev_buf_size = 4096
 };
 
-static char *console;
+static const char *console="devices/\\hw\\nst2\\a";
 
 static async_sess_t *sess;
 static chardev_t *chardev;
@@ -219,7 +219,7 @@ errno_t chardev_init(void)
 		return EOK;
 #endif
 	} else {
-		console = config_get_value("console");
+		// console = config_get_value("console");
 		if (!console)
 			return EOK;
 	}

@@ -66,7 +66,6 @@ DIRS = \
 	app/modplay \
 	app/netecho \
 	app/nterm \
-	app/pci \
 	app/perf \
 	app/redir \
 	app/sbi \
@@ -167,6 +166,8 @@ DIRS = \
 	drv/char/i8042 \
 	drv/char/msim-con \
 	drv/char/ns8250 \
+	drv/char/nstest \
+	drv/char/nstest2 \
 	drv/char/pc-lpt \
 	drv/char/pl050 \
 	drv/char/ski-con \

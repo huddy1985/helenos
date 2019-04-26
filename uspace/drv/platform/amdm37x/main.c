@@ -66,6 +66,7 @@ typedef struct {
 #define VIDEO_ENC_BASE_ADDRESS   0x48050C00
 #define VIDEO_ENC_SIZE   256
 
+/* SNOW
 static hw_resource_t ohci_res[] = {
 	{
 		.type = MEM_RANGE,
@@ -84,7 +85,6 @@ static hw_resource_t ohci_res[] = {
 static hw_resource_t ehci_res[] = {
 	{
 		.type = MEM_RANGE,
-		/* See amdm37x TRM page. 3316 for these values */
 		.res.io_range = {
 			.address = EHCI_BASE_ADDRESS,
 			.size = EHCI_SIZE,
@@ -126,9 +126,10 @@ static hw_resource_t disp_res[] = {
 		.type = INTERRUPT,
 		.res.interrupt = { .irq = 25 },
 	},
-};
+};*/
 
 static const amdm37x_fun_t amdm37x_funcs[] = {
+	/*
 	{
 		.name = "ohci",
 		.id = "usb/host=ohci",
@@ -147,6 +148,18 @@ static const amdm37x_fun_t amdm37x_funcs[] = {
 		.score = 90,
 		.hw_resources = { .resources = disp_res, .count = ARRAY_SIZE(disp_res) }
 	},
+	SNOW */
+	{
+		.name = "nst",
+		.id = "nstest",
+		.score = 90,
+	},
+	{
+		.name = "nst2",
+		.id = "nstest2",
+		.score = 90,
+	},
+
 };
 
 static hw_resource_list_t *amdm37x_get_resources(ddf_fun_t *fnode);
@@ -224,19 +237,19 @@ static errno_t amdm37x_dev_add(ddf_dev_t *dev)
 	}
 
 	/* Set dplls to ON and automatic */
-	amdm37x_setup_dpll_on_autoidle(device);
+//	amdm37x_setup_dpll_on_autoidle(device);
 
 	/* Enable function and interface clocks */
-	amdm37x_usb_clocks_set(device, true);
+//	amdm37x_usb_clocks_set(device, true);
 
 	/* Init TLL */
-	ret = amdm37x_usb_tll_init(device);
+/*	ret = amdm37x_usb_tll_init(device);
 	if (ret != EOK) {
 		ddf_msg(LVL_FATAL, "Failed to init USB TLL!.\n");
 		amdm37x_usb_clocks_set(device, false);
 		return ret;
 	}
-
+*/
 	/* Register functions */
 	for (unsigned i = 0; i < ARRAY_SIZE(amdm37x_funcs); ++i) {
 		if (amdm37x_add_fun(dev, &amdm37x_funcs[i]) != EOK)

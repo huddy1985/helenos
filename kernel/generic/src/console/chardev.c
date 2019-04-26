@@ -124,6 +124,22 @@ wchar_t indev_pop_character(indev_t *indev)
 	return ch;
 }
 
+wchar_t indev_get_character(indev_t *indev)
+{
+	irq_spinlock_lock(&indev->lock, true);
+	if(indev->counter <= 0) {
+		irq_spinlock_unlock(&indev->lock, true);
+		return -1;
+	}
+	wchar_t ch = indev->buffer[(indev->index - indev->counter) %
+	    INDEV_BUFLEN];
+	indev->counter--;
+	irq_spinlock_unlock(&indev->lock, true);
+
+	return ch;
+
+}
+
 /** Signal out-of-band condition
  *
  * @param indev  Input character device.

@@ -67,8 +67,11 @@ endif
 ifeq ($(MACHINE), $(filter $(MACHINE),beagleboardxm beaglebone))
 	RD_DRVS_ESSENTIAL += \
 		platform/amdm37x \
-		fb/amdm37x_dispc
+		fb/amdm37x_dispc \
+		char/nstest \
+		char/nstest2
 endif
+#SNOW
 
 ifeq ($(MACHINE), integratorcp)
 	RD_DRVS_ESSENTIAL += \

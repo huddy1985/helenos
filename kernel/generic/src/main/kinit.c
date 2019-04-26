@@ -160,10 +160,12 @@ void kinit(void *arg)
 		log(LF_OTHER, LVL_ERROR, "Unable to create kload thread");
 
 #ifdef CONFIG_KCONSOLE
-	if (stdin) {
+	// SNOW
+	//if (stdin) {
 		/*
 		 * Create kernel console.
 		 */
+	/*
 		thread = thread_create(kconsole_thread, NULL, TASK,
 		    THREAD_FLAG_NONE, "kconsole");
 		if (thread != NULL)
@@ -172,6 +174,7 @@ void kinit(void *arg)
 			log(LF_OTHER, LVL_ERROR,
 			    "Unable to create kconsole thread");
 	}
+	*/
 #endif /* CONFIG_KCONSOLE */
 
 	/*

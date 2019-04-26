@@ -274,7 +274,9 @@ errno_t vfs_open_node_remote(vfs_node_t *node)
 	vfs_exchange_release(exch);
 
 	errno_t rc;
+	//printf("snow vfs_open_node_remote t1\n");
 	async_wait_for(req, &rc);
+	//printf("snow vfs_open_node_remote t2\n");
 
 	return rc;
 }

@@ -160,6 +160,7 @@ static errno_t add_platform_fun(ddf_dev_t *dev)
 
 	free(platform);
 
+	//printf("SNOW match_id: %s\n", match_id);
 	/* Add function. */
 	ddf_msg(LVL_DEBUG, "Adding platform function. Function node is `%s' "
 	    " (%d %s)", PLATFORM_FUN_NAME, PLATFORM_FUN_MATCH_SCORE,

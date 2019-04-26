@@ -468,11 +468,12 @@ int main(int argc, char *argv[])
 	rc = console(HID_INPUT, HID_OUTPUT);
 	if (rc == EOK) {
 		getterm("term/vc0", "/app/bdsh", true);
-		getterm("term/vc1", "/app/bdsh", false);
+		/*getterm("term/vc1", "/app/bdsh", false);
 		getterm("term/vc2", "/app/bdsh", false);
 		getterm("term/vc3", "/app/bdsh", false);
 		getterm("term/vc4", "/app/bdsh", false);
 		getterm("term/vc5", "/app/bdsh", false);
+		*/
 	}
 
 	return 0;

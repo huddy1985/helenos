@@ -66,6 +66,26 @@ void __kio_fini(void)
 	futex_destroy(&kio_buffer.futex);
 }
 
+errno_t nskio_write(const void *buf, size_t size, size_t *nwritten)
+{
+	size_t written = size;
+	__SYSCALL3(SYS_KIO, NSKIO_WRITE,
+			    (sysarg_t) buf, (size_t)(&written));
+	if(nwritten)
+		*nwritten = written;
+	return EOK;
+}
+
+errno_t nskio_read(const void *buf, size_t size, size_t *nwread)
+{
+	size_t read = size;
+	__SYSCALL3(SYS_KIO, NSKIO_READ, (sysarg_t)buf, (size_t)(&read));
+	if(nwread) 
+		*nwread = read;
+	return EOK;
+}
+
+
 errno_t kio_write(const void *buf, size_t size, size_t *nwritten)
 {
 	/* Using down/up instead of lock/unlock so we can print very early. */

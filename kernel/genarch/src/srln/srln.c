@@ -56,6 +56,8 @@ static void ksrln(void *arg)
 
 	while (true) {
 		wchar_t ch = indev_pop_character(&instance->raw);
+		indev_push_character(instance->sink, ch);
+		continue;
 
 		/* ANSI escape sequence processing */
 		if (escape != 0) {
@@ -155,6 +157,7 @@ indev_t *srln_wire(srln_instance_t *instance, indev_t *sink)
 	assert(sink);
 
 	instance->sink = sink;
+	// SNOW
 	thread_ready(instance->thread);
 
 	return &instance->raw;

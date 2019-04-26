@@ -1389,9 +1389,6 @@ static bool loc_init(void)
 	cat = category_new("printer-port");
 	categ_dir_add_cat(&cdir, cat);
 
-	cat = category_new("pci");
-	categ_dir_add_cat(&cdir, cat);
-
 	return true;
 }
 

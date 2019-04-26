@@ -49,20 +49,17 @@
 static errno_t smallx_open(chardev_srvs_t *, chardev_srv_t *);
 static errno_t smallx_close(chardev_srv_t *);
 static errno_t smallx_write(chardev_srv_t *, const void *, size_t, size_t *);
-static errno_t smallx_read(chardev_srv_t *, void *, size_t, size_t *,
-    chardev_flags_t);
+static errno_t smallx_read(chardev_srv_t *, void *, size_t, size_t *);
 
 static errno_t largex_open(chardev_srvs_t *, chardev_srv_t *);
 static errno_t largex_close(chardev_srv_t *);
 static errno_t largex_write(chardev_srv_t *, const void *, size_t, size_t *);
-static errno_t largex_read(chardev_srv_t *, void *, size_t, size_t *,
-    chardev_flags_t);
+static errno_t largex_read(chardev_srv_t *, void *, size_t, size_t *);
 
 static errno_t partialx_open(chardev_srvs_t *, chardev_srv_t *);
 static errno_t partialx_close(chardev_srv_t *);
 static errno_t partialx_write(chardev_srv_t *, const void *, size_t, size_t *);
-static errno_t partialx_read(chardev_srv_t *, void *, size_t, size_t *,
-    chardev_flags_t);
+static errno_t partialx_read(chardev_srv_t *, void *, size_t, size_t *);
 
 static service_id_t smallx_svc_id;
 static chardev_srvs_t smallx_srvs;
@@ -188,7 +185,7 @@ static errno_t smallx_write(chardev_srv_t *srv, const void *data, size_t size,
 }
 
 static errno_t smallx_read(chardev_srv_t *srv, void *buf, size_t size,
-    size_t *nread, chardev_flags_t flags)
+    size_t *nread)
 {
 	if (size < 1) {
 		*nread = 0;
@@ -223,7 +220,7 @@ static errno_t largex_write(chardev_srv_t *srv, const void *data, size_t size,
 }
 
 static errno_t largex_read(chardev_srv_t *srv, void *buf, size_t size,
-    size_t *nread, chardev_flags_t flags)
+    size_t *nread)
 {
 	if (size < 1) {
 		*nread = 0;
@@ -258,7 +255,7 @@ static errno_t partialx_write(chardev_srv_t *srv, const void *data, size_t size,
 }
 
 static errno_t partialx_read(chardev_srv_t *srv, void *buf, size_t size,
-    size_t *nread, chardev_flags_t flags)
+    size_t *nread)
 {
 	if (size < 1) {
 		*nread = 0;

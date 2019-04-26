@@ -135,8 +135,7 @@ const char *test_serial1(void)
 	size_t total = 0;
 	while (total < cnt) {
 
-		rc = chardev_read(chardev, buf, cnt - total, &nread,
-		    chardev_f_none);
+		rc = chardev_read(chardev, buf, cnt - total, &nread);
 		if (rc != EOK) {
 			(void) serial_set_comm_props(serial, old_baud,
 			    old_par, old_word_size, old_stop);

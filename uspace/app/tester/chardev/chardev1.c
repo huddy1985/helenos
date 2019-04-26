@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Jiri Svoboda
+ * Copyright (c) 2017 Jiri Svoboda
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -75,8 +75,7 @@ static const char *test_chardev1_smallx(void)
 
 	TPRINTF("Sent %zu bytes\n", nbytes);
 
-	rc = chardev_read(chardev, small_buffer, SMALL_BUFFER_SIZE, &nbytes,
-	    chardev_f_none);
+	rc = chardev_read(chardev, small_buffer, SMALL_BUFFER_SIZE, &nbytes);
 	if (rc != EOK) {
 		chardev_close(chardev);
 		async_hangup(sess);
@@ -128,8 +127,7 @@ static const char *test_chardev1_largex(void)
 
 	TPRINTF("Sent %zu bytes\n", nbytes);
 
-	rc = chardev_read(chardev, large_buffer, LARGE_BUFFER_SIZE, &nbytes,
-	    chardev_f_none);
+	rc = chardev_read(chardev, large_buffer, LARGE_BUFFER_SIZE, &nbytes);
 	if (rc != EOK) {
 		chardev_close(chardev);
 		async_hangup(sess);
@@ -182,8 +180,7 @@ static const char *test_chardev1_partialx(void)
 	TPRINTF("Sent %zu bytes and got rc = %s (expected)\n", nbytes,
 	    str_error_name(rc));
 
-	rc = chardev_read(chardev, small_buffer, SMALL_BUFFER_SIZE, &nbytes,
-	    chardev_f_none);
+	rc = chardev_read(chardev, small_buffer, SMALL_BUFFER_SIZE, &nbytes);
 	if (rc != EIO || nbytes != 1) {
 		chardev_close(chardev);
 		async_hangup(sess);

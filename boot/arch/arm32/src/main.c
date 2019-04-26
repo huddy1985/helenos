@@ -96,7 +96,7 @@ void bootstrap(void)
 
 	// FIXME: Use the correct value.
 	uint8_t *kernel_dest = (uint8_t *) BOOT_OFFSET;
-	uint8_t *ram_end = kernel_dest + (1 << 24);
+	uint8_t *ram_end = kernel_dest + (1 << 28);
 
 	extract_payload(&bootinfo.taskmap, kernel_dest, ram_end,
 	    PA2KA(kernel_dest), clean_dcache_poc);

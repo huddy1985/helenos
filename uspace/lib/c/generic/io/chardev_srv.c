@@ -47,10 +47,7 @@ static void chardev_read_srv(chardev_srv_t *srv, ipc_call_t *icall)
 	void *buf;
 	size_t size;
 	size_t nread;
-	chardev_flags_t flags;
 	errno_t rc;
-
-	flags = IPC_GET_ARG1(*icall);
 
 	ipc_call_t call;
 	if (!async_data_read_receive(&call, &size)) {
@@ -72,7 +69,7 @@ static void chardev_read_srv(chardev_srv_t *srv, ipc_call_t *icall)
 		return;
 	}
 
-	rc = srv->srvs->ops->read(srv, buf, size, &nread, flags);
+	rc = srv->srvs->ops->read(srv, buf, size, &nread);
 	if (rc != EOK && nread == 0) {
 		async_answer_0(&call, rc);
 		async_answer_0(icall, rc);

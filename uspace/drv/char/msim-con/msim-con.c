@@ -42,8 +42,7 @@
 
 static void msim_con_connection(ipc_call_t *, void *);
 
-static errno_t msim_con_read(chardev_srv_t *, void *, size_t, size_t *,
-    chardev_flags_t);
+static errno_t msim_con_read(chardev_srv_t *, void *, size_t, size_t *);
 static errno_t msim_con_write(chardev_srv_t *, const void *, size_t, size_t *);
 
 static chardev_ops_t msim_con_chardev_ops = {
@@ -185,7 +184,7 @@ static void msim_con_putchar(msim_con_t *con, uint8_t ch)
 
 /** Read from msim console device */
 static errno_t msim_con_read(chardev_srv_t *srv, void *buf, size_t size,
-    size_t *nread, chardev_flags_t flags)
+    size_t *nread)
 {
 	msim_con_t *con = (msim_con_t *) srv->srvs->sarg;
 	size_t p;
@@ -194,8 +193,7 @@ static errno_t msim_con_read(chardev_srv_t *srv, void *buf, size_t size,
 
 	fibril_mutex_lock(&con->buf_lock);
 
-	while ((flags & chardev_f_nonblock) == 0 &&
-	    circ_buf_nused(&con->cbuf) == 0)
+	while (circ_buf_nused(&con->cbuf) == 0)
 		fibril_condvar_wait(&con->buf_cv, &con->buf_lock);
 
 	p = 0;

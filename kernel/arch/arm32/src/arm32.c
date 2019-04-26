@@ -110,9 +110,12 @@ void arm32_post_smp_init(void)
 {
 	machine_input_init();
 	const char *platform = machine_get_platform_name();
+	const char *console = "console=devices/\\hw\\nst\\a ";
 
 	sysinfo_set_item_data("platform", NULL, (void *) platform,
 	    str_size(platform));
+	sysinfo_set_item_data("boot_args", NULL, (void *) console,
+	    str_size(console));
 }
 
 /** Performs arm32 specific tasks needed before the new task is run. */

@@ -394,10 +394,12 @@ void putwchar(const wchar_t ch)
  * Print to kernel log.
  *
  */
-sys_errno_t sys_kio(int cmd, const void *buf, size_t size)
+sys_errno_t sys_kio(int cmd, void *buf, size_t size)
 {
 	char *data;
+	void* rw = (void*)size;
 	errno_t rc;
+	size_t num = 0;
 
 	switch (cmd) {
 	case KIO_UPDATE:
@@ -405,18 +407,43 @@ sys_errno_t sys_kio(int cmd, const void *buf, size_t size)
 		return EOK;
 	case KIO_WRITE:
 	case KIO_COMMAND:
+	case NSKIO_READ:
+	case NSKIO_WRITE:
 		break;
 	default:
 		return ENOTSUP;
 	}
 
-	if (size > PAGE_SIZE)
+	if(cmd == NSKIO_READ || cmd == NSKIO_WRITE) {
+		rc = copy_from_uspace(&size, rw, sizeof(size_t));
+		if (rc)
+                        return (sys_errno_t) rc;
+	}
+
+	if (size > PAGE_SIZE) {
+		printf("SNOW sys_kio ELIMIT\n");
 		return (sys_errno_t) ELIMIT;
+	}
 
 	if (size > 0) {
 		data = (char *) malloc(size + 1);
 		if (!data)
 			return (sys_errno_t) ENOMEM;
+
+		if(cmd == NSKIO_READ) {
+			num = 0;
+			while(num < size) {
+				data[num] = (char)indev_pop_character(stdin);
+				num++;
+			}
+			rc = copy_to_uspace(rw, &num, sizeof(size_t));
+			if(rc)
+				return (sys_errno_t)rc;
+			rc = copy_to_uspace(buf, data, num);
+			if(rc)
+				return (sys_errno_t)rc;
+			return EOK;
+		}
 
 		rc = copy_from_uspace(data, buf, size);
 		if (rc) {
@@ -436,6 +463,12 @@ sys_errno_t sys_kio(int cmd, const void *buf, size_t size)
 			for (unsigned int i = 0; i < size; i++)
 				indev_push_character(stdin, data[i]);
 			indev_push_character(stdin, '\n');
+			break;
+		case NSKIO_WRITE:
+			if(!stdout)
+				break;
+			for (unsigned int i = 0; i < size; i++)
+				stdout->op->write(stdout, data[i]);
 			break;
 		}
 

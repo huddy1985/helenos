@@ -417,7 +417,7 @@ errno_t nic_report_poll_mode(nic_t *nic_data, nic_poll_mode_t mode,
 	return rc;
 }
 
-/** Inform the NICF about device's MAC address.
+/** Inform the NICF about device's MAC adress.
  *
  * @return EOK On success
  *

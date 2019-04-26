@@ -588,16 +588,20 @@ errno_t vfs_lookup(const char *path, int flags, int *handle)
 errno_t vfs_lookup_open(const char *path, int flags, int mode, int *handle)
 {
 	int file;
+	//printf("snow vfs_lookup_open:%s\n", path);
 	errno_t rc = vfs_lookup(path, flags, &file);
 	if (rc != EOK)
 		return rc;
 
+	//printf("snow vfs_lookup_open t2:%d\n", file);
 	rc = vfs_open(file, mode);
+	//printf("snow vfs_lookup_open t3\n");
 	if (rc != EOK) {
 		vfs_put(file);
 		return rc;
 	}
 
+	//printf("snow vfs_lookup_open t4\n");
 	*handle = file;
 	return EOK;
 }

@@ -113,6 +113,7 @@ extern void indev_initialize(const char *, indev_t *,
     indev_operations_t *);
 extern void indev_push_character(indev_t *, wchar_t);
 extern wchar_t indev_pop_character(indev_t *);
+extern wchar_t indev_get_character(indev_t *); // SNOW
 extern void indev_signal(indev_t *, indev_signal_t);
 
 extern void outdev_initialize(const char *, outdev_t *,

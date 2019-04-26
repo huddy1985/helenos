@@ -227,7 +227,7 @@ size_t bbone_get_irq_count(void)
 
 const char *bbone_get_platform_name(void)
 {
-	return "beaglebone";
+	return "beagleboardxm";
 }
 
 /**
